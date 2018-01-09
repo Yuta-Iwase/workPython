@@ -1,11 +1,11 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-inputPath = "list.csv"
+inputPath = "list_weight.csv"
 logscale = True
 bin_n = 50
-title = "BC dist"
-outputName = "bc_dist"
+title = "weight dist"
+outputName = "weight_dist"
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -38,6 +38,6 @@ if logscale:
 plt.title(title)
 plt.plot(x[0:len(x)-1],y,color="black",marker="o",fillstyle="none",markersize="10",markeredgecolor="blue")
 
-os.makedirs("output")
+os.mkdir("output")
 plt.savefig("output/" + outputName + ".png")
 plt.savefig("output/" + outputName + ".eps")
