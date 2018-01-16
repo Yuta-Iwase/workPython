@@ -4,8 +4,11 @@
 ### ここに入出力情報を打つ
 inputPath = ["not_shuffle.csv","shuffle.csv"]
 outputName = ""
+plotRangeX = [-3,2] #自動範囲の場合[]にする
+plotRangeY = [-1,0.5] #自動範囲の場合[]にする
 withLines = True
-lineColor = "black"
+lineColors = ["black","yellow"]
+dottedLine = [True, False]
 withPoints = True
 pointColors = ["red","blue"]
 logscaleX = False
@@ -13,6 +16,7 @@ logscaleY = False
 title = "biased RW"
 xLabel = r"$\alpha$"
 yLabel = "HS frac"
+legendPosition = "lower center" #凡例の位置:lower,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
 
@@ -45,6 +49,10 @@ for i in range(len(inputPath)):
 
 # プロット
 width = 0
+if len(plotRangeX)>0:
+    plt.xlim(plotRangeX)
+if len(plotRangeY)>0:
+    plt.ylim(plotRangeY)
 if withLines:
     width = 2
 if logscaleX:
@@ -56,12 +64,21 @@ plt.xlabel(xLabel)
 plt.ylabel(yLabel)
 
 for i in range(len(inputPath)):
-    legend = inputPath[i][:inputPath[i].find(".csv")]
-    if withPoints:
-        plt.plot(xList[i],yList[i],linewidth=width,color=lineColor,marker="o",fillstyle="none",markersize="10",markeredgecolor=pointColors[i],label=legend)
+    legend = inputPath[i][:inputPath[i].find(".")]
+    if dottedLine[i]:
+        style = "--"
     else:
-        plt.plot(xList[i],yList[i],linewidth=width,color=lineColor,label=legend)
-plt.legend()
+        style = "-"
+    if withPoints:
+        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker="o",fillstyle="none",markersize="10",markeredgecolor=pointColors[i],label=legend)
+    else:
+        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
+
+if len(legendPosition)>0:
+    plt.legend(loc = legendPosition)
+else:
+    plt.legend()
+
 
 # 書き込み
 if len(outputName)<=0:
@@ -71,3 +88,4 @@ if (not os.path.exists("output")):
 plt.savefig("output/" + outputName + ".png")
 plt.savefig("output/" + outputName + ".eps", transparent=True)
 plt.savefig("output/" + outputName + ".pdf", transparent=True)
+plt.savefig("output/" + outputName + ".emf", transparent=True)
