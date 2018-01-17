@@ -7,7 +7,7 @@ outputName = ""
 plotRangeX = [-3,2] #自動範囲の場合[]にする
 plotRangeY = [-1,0.5] #自動範囲の場合[]にする
 withLines = True
-lineColors = ["black","yellow"]
+lineColors = ["black","green"]
 dottedLine = [True, False]
 withPoints = True
 pointColors = ["red","blue"]
@@ -27,7 +27,6 @@ legendPosition = "lower center" #凡例の位置:lower,upperで縦方向、left,
 import matplotlib.pyplot as plt
 import pandas as pd
 import os
-import numpy as np
 
 # データ読み取り
 xList = []
@@ -88,4 +87,3 @@ if (not os.path.exists("output")):
 plt.savefig("output/" + outputName + ".png")
 plt.savefig("output/" + outputName + ".eps", transparent=True)
 plt.savefig("output/" + outputName + ".pdf", transparent=True)
-plt.savefig("output/" + outputName + ".emf", transparent=True)
