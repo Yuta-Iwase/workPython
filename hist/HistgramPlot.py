@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 
 inputPath = "list.csv"
-logscale = True
-bin_n = 50
+logscale = False
+bin_n = 10
 title = "BC dist"
 outputName = "bc_dist"
 
