@@ -2,21 +2,22 @@
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
-inputPath = ["not_shuffle.csv","shuffle.csv"]
-outputName = ""
-plotRangeX = [-3,2] #自動範囲の場合[]にする
-plotRangeY = [-1,0.5] #自動範囲の場合[]にする
+inputPath = ["N-comp.csv","D-comp.csv","I-comp.csv","DI-comp.csv"]
+outputName = "caida_AS_network"
+plotRangeX = [] #自動範囲の場合[]にする
+plotRangeY = [] #自動範囲の場合[]にする
 withLines = True
-lineColors = ["black","green"]
-dottedLine = [True, False]
+lineColors = ["black","red","blue","Green"]
+dottedLine = [False,False,False,False]
 withPoints = True
-pointColors = ["red","blue"]
+pointColors = ["black","red","blue","Green"]
+pointSizes = [3,3,3,3]
 logscaleX = False
 logscaleY = False
-title = "biased RW"
-xLabel = r"$\alpha$"
-yLabel = "HS frac"
-legendPosition = "lower center" #凡例の位置:lower,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
+title = ""
+xLabel = r"$f$"
+yLabel = r"largest connected component size $/ N$"
+legendPosition = "center right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
 
@@ -64,12 +65,15 @@ plt.ylabel(yLabel)
 
 for i in range(len(inputPath)):
     legend = inputPath[i][:inputPath[i].find(".")]
-    if dottedLine[i]:
-        style = "--"
+    if len(dottedLine)>=len(inputPath) and withLines:
+        if dottedLine[i]:
+            style = "--"
+        else:
+            style = "-"
     else:
-        style = "-"
+        style = ""
     if withPoints:
-        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker="o",fillstyle="none",markersize="10",markeredgecolor=pointColors[i],label=legend)
+        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker="o",fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
     else:
         plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
 
