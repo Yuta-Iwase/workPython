@@ -2,21 +2,21 @@
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
-inputPath = ["NI-comp.csv","N-comp.csv","D-comp.csv","I-comp.csv","DI-comp.csv"]
+inputPath = ["NI-comp.csv","N-comp.csv"]
 outputName = "caida_AS_network"
 plotRangeX = [] #自動範囲の場合[]にする
 plotRangeY = [] #自動範囲の場合[]にする
 withLines = True
-lineColors = ["black","black","red","green","blue"]
-dottedLine = [True,False,False,False,False]
+lineColors = ["black","black"]
+dottedLine = [True,False]
 withPoints = True
-pointColors = ["black","black","red","green","blue"]
-pointSizes = [0,3,3,3,3]
+pointColors = ["black","black"]
+pointSizes = [0,0]
 logscaleX = False
 logscaleY = False
 title = ""
-xLabel = r"$f$"
-yLabel = r"largest connected component size $/ N$"
+xLabel = r""
+yLabel = r""
 legendPosition = "center right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
