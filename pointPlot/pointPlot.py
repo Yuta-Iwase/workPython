@@ -17,7 +17,7 @@ logscaleY = False
 title = ""
 xLabel = r"$f$"
 yLabel = r"largest connected component size $/ N$"
-withLegend = False
+withLegend = True
 legendPosition = "center right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
