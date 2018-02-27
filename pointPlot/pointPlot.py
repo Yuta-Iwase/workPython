@@ -3,7 +3,7 @@
 
 ### ここに入出力情報を打つ
 inputPath = ["alpha=-2_0.csv","alpha=-0_4.csv","alpha=2_0.csv"]
-outputName = "edge_bc"
+outputName = "node_bc"
 plotRangeX = [] #自動範囲の場合[]にする
 plotRangeY = [] #自動範囲の場合[]にする
 withLines = True
@@ -15,10 +15,11 @@ pointSizes = [5,5,5]
 accumulationMode = 2 #0で累積なし、1で累積、2で逆累積
 logscaleX = True
 logscaleY = True
-title = "edge betweenneess"
-xLabel = r"edge bc"
-yLabel = r"$p($edge bc$)$"
+title = "node betweenneess"
+xLabel = r"node bc"
+yLabel = r"$p($node bc$)$"
 withLegend = True
+legendLabel = []
 legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
@@ -76,7 +77,10 @@ plt.xlabel(xLabel)
 plt.ylabel(yLabel)
 
 for i in range(len(inputPath)):
-    legend = inputPath[i][:inputPath[i].find(".")]
+    if len(legendLabel)==len(inputPath):
+        legend = legendLabel[i]
+    else:
+        legend = inputPath[i][:inputPath[i].find(".")]
     if len(dottedLine)>=len(inputPath) and withLines:
         if dottedLine[i]:
             style = "--"
