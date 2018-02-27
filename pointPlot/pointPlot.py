@@ -2,23 +2,24 @@
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
-inputPath = ["NI-comp.csv","N-comp.csv","D-comp.csv","I-comp.csv","DI-comp.csv"]
-outputName = "caida_AS_network"
+inputPath = ["alpha=-2_0.csv","alpha=-0_4.csv","alpha=2_0.csv"]
+outputName = "edge_bc"
 plotRangeX = [] #自動範囲の場合[]にする
 plotRangeY = [] #自動範囲の場合[]にする
 withLines = True
-lineColors = ["black","black","red","green","blue"]
-dottedLine = [True,False,False,False,False]
+lineColors = ["blue","black","red"]
+dottedLine = [False,False,False]
 withPoints = True
-pointColors = ["black","black","red","green","blue"]
-pointSizes = [0,3,3,3,3]
-logscaleX = False
-logscaleY = False
-title = ""
-xLabel = r"$f$"
-yLabel = r"largest connected component size $/ N$"
+pointColors = ["blue","black","red"]
+pointSizes = [5,5,5]
+accumulationMode = 2 #0で累積なし、1で累積、2で逆累積
+logscaleX = True
+logscaleY = True
+title = "edge betweenneess"
+xLabel = r"edge bc"
+yLabel = r"$p($edge bc$)$"
 withLegend = True
-legendPosition = "center right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
+legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
 #############################
 
 
@@ -47,6 +48,16 @@ for i in range(len(inputPath)):
     y = adarrayDataY.tolist()
     yList.append(y)
 
+# 累積分布の処理
+if accumulationMode==1:
+    for i in range(len(yList)):
+        for j in range(len(yList[i])-1):
+            yList[i][j+1] += yList[i][j]
+if accumulationMode==2:
+    for i in range(len(yList)):
+        yList[i][0] = sum(yList[i]) - yList[i][0]
+        for j in range(len(yList[i])-1):
+            yList[i][j+1] = yList[i][j] - yList[i][j+1]
 
 # プロット
 width = 0
