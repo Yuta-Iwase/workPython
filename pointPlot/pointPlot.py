@@ -19,8 +19,8 @@ title = "node betweenneess"
 xLabel = r"node bc"
 yLabel = r"$p($node bc$)$"
 withLegend = True
-legendLabel = []
-legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定#
+legendLabel = [r"$\alpha = -2.0$",r"$\alpha = -0.4$",r"$\alpha = 2.0$"] #凡例の名前、空欄ならファイル名がそのままに名前になる
+legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定
 #############################
 
 
