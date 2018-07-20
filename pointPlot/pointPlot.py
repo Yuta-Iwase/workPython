@@ -1,4 +1,3 @@
-#!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
@@ -35,6 +34,7 @@ import os
 # データ読み取り
 xList = []
 yList = []
+annotateList = []
 for i in range(len(inputPath)):
     # 読み取りDataFrame形式で返す
     readData = pd.read_csv(inputPath[i],header=None)
@@ -48,6 +48,13 @@ for i in range(len(inputPath)):
     xList.append(x)
     y = adarrayDataY.tolist()
     yList.append(y)
+    # annotate情報を確認、格納
+    an = []
+    if len(adarrayData[0])>2:
+        adarrayAnnotate = adarrayData[:,2]
+        an = adarrayAnnotate.tolist()
+    annotateList.append(an)
+
 
 # 累積分布の処理
 if accumulationMode==1:
@@ -92,6 +99,12 @@ for i in range(len(inputPath)):
         plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker="o",fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
     else:
         plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
+    if len(annotateList[i])>0:
+        currentAnnotate = annotateList[i]
+        currentX = xList[i]
+        currentY = yList[i]
+        for p in range(len(currentAnnotate)):
+            plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]))
 
 if withLegend:
     if len(legendPosition)>0:
