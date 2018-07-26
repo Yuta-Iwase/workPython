@@ -63,9 +63,10 @@ if accumulationMode==1:
             yList[i][j+1] += yList[i][j]
 if accumulationMode==2:
     for i in range(len(yList)):
-        yList[i][0] = sum(yList[i]) - yList[i][0]
+        length = len(yList[i])
         for j in range(len(yList[i])-1):
-            yList[i][j+1] = yList[i][j] - yList[i][j+1]
+            inv_j = length-1-j
+            yList[i][inv_j-1] += yList[i][inv_j]
 
 # プロット
 width = 0
@@ -104,7 +105,7 @@ for i in range(len(inputPath)):
         currentX = xList[i]
         currentY = yList[i]
         for p in range(len(currentAnnotate)):
-            plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]))
+            plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]), color=pointColors[i])
 
 if withLegend:
     if len(legendPosition)>0:
