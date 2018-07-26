@@ -11,6 +11,8 @@ dottedLine = [False,False,False]
 withPoints = True
 pointColors = ["blue","black","red"]
 pointSizes = [5,5,5]
+pointDescription = ["^", "^", "^"] #マーカーの形、"o"で丸、"^"で三角、詳しくはhttps://pythondatascience.plavox.info/matplotlib/%E3%83%9E%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E5%90%8D%E5%89%8D
+withAnnotate = True
 accumulationMode = 2 #0で累積なし、1で累積、2で逆累積
 logscaleX = True
 logscaleY = True
@@ -97,10 +99,13 @@ for i in range(len(inputPath)):
     else:
         style = ""
     if withPoints:
-        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker="o",fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
+        m = "o"
+        if len(pointDescription)>0:
+            m = pointDescription[i]
+        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker=m,fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
     else:
         plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
-    if len(annotateList[i])>0:
+    if (len(annotateList[i])>0 and withAnnotate):
         currentAnnotate = annotateList[i]
         currentX = xList[i]
         currentY = yList[i]
