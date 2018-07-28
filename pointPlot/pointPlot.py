@@ -1,27 +1,32 @@
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
-inputPath = ["alpha=-2_0.csv","alpha=-0_4.csv","alpha=2_0.csv"]
-outputName = "node_bc"
+inputPath = ["test.csv"]
+outputName = "kk_vs_w"
 plotRangeX = [] #自動範囲の場合[]にする
 plotRangeY = [] #自動範囲の場合[]にする
-withLines = True
+withLines = False
 lineColors = ["blue","black","red"]
 dottedLine = [False,False,False]
 withPoints = True
 pointColors = ["blue","black","red"]
 pointSizes = [5,5,5]
-pointDescription = ["^", "^", "^"] #マーカーの形、"o"で丸、"^"で三角、詳しくはhttps://pythondatascience.plavox.info/matplotlib/%E3%83%9E%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E5%90%8D%E5%89%8D
+pointDescription = ["o", "^", "^"] #マーカーの形、"o"で丸、"^"で三角、詳しくはhttps://pythondatascience.plavox.info/matplotlib/%E3%83%9E%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E5%90%8D%E5%89%8D
 withAnnotate = True
-accumulationMode = 2 #0で累積なし、1で累積、2で逆累積
+accumulationMode = 0 #0で累積なし、1で累積、2で逆累積
 logscaleX = True
 logscaleY = True
-title = "node betweenneess"
-xLabel = r"node bc"
-yLabel = r"$p($node bc$)$"
+title = r"$kk$ vs $w$"
+xLabel = r"$k_i k_j$"
+yLabel = r"$w_{ij}$"
 withLegend = True
-legendLabel = [r"$\alpha = -2.0$",r"$\alpha = -0.4$",r"$\alpha = 2.0$"] #凡例の名前、空欄ならファイル名がそのままに名前になる
-legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定
+legendLabel = [r"${\alpha}=1.5$"] #凡例の名前、空欄ならファイル名がそのままに名前になる
+legendPosition = "upper left" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定
+### 追加情報
+function_List = ["y=(x**1.5)/800"] ##関数を定義。y=(xの関数)の形式で書く。例:"y=x**2"
+function_LineColors = ["red"]
+function_DottedLine = [True]
+function_LegendLabel = [r"$y=x^{1.5}/800$"]
 #############################
 
 
@@ -30,6 +35,7 @@ legendPosition = "upper right" #凡例の位置:lower,center,upperで縦方向�
 ### ここからプログラム内容
 
 import matplotlib.pyplot as plt
+import numpy as np
 import pandas as pd
 import os
 
@@ -111,6 +117,26 @@ for i in range(len(inputPath)):
         currentY = yList[i]
         for p in range(len(currentAnnotate)):
             plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]), color=pointColors[i])
+
+if len(function_List)>0:
+    xLim = plt.xlim()
+    beforeYLim = plt.ylim()
+    x = np.linspace(xLim[0],xLim[1],100)
+    for i in range(len(function_List)):
+        exec(function_List[i]) ##ここでを計算
+        if len(function_LegendLabel)>=len(function_List):
+            legend = function_LegendLabel[i]
+        else:
+            legend = function_List[i]
+        if len(function_DottedLine)>=len(function_List):
+            if function_DottedLine[i]:
+                style = "--"
+            else:
+                style = "-"
+        plt.plot(x, y, linestyle=style, linewidth=2, color=function_LineColors[i], markersize=0, label=legend)
+    plt.ylim(beforeYLim)
+    del x
+    del y
 
 if withLegend:
     if len(legendPosition)>0:
