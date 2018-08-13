@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ### ここに入出力情報を打つ
-inputPath = ["test.csv"]
+inputPath = ["test.csv", "test.csv"]
 outputName = "kk_vs_w"
 plotRangeX = [] #自動範囲の場合[]にする
 plotRangeY = [] #自動範囲の場合[]にする
@@ -14,19 +14,24 @@ pointSizes = [5,5,5]
 pointDescription = ["o", "^", "^"] #マーカーの形、"o"で丸、"^"で三角、詳しくはhttps://pythondatascience.plavox.info/matplotlib/%E3%83%9E%E3%83%BC%E3%82%AB%E3%83%BC%E3%81%AE%E5%90%8D%E5%89%8D
 withAnnotate = True
 accumulationMode = 0 #0で累積なし、1で累積、2で逆累積
-logscaleX = True
-logscaleY = True
+logscaleX = False
+logscaleY = False
 title = r"$kk$ vs $w$"
 xLabel = r"$k_i k_j$"
 yLabel = r"$w_{ij}$"
 withLegend = True
 legendLabel = [r"${\alpha}=1.5$"] #凡例の名前、空欄ならファイル名がそのままに名前になる
 legendPosition = "upper left" #凡例の位置:lower,center,upperで縦方向、left,center,rightで横方向の位置を設定できる、空白で自動設定
-### 追加情報
+### 関数情報
 function_List = ["y=(x**1.5)/800"] ##関数を定義。y=(xの関数)の形式で書く。例:"y=x**2"
 function_LineColors = ["red"]
 function_DottedLine = [True]
 function_LegendLabel = [r"$y=x^{1.5}/800$"]
+### 棒グラフプロパティ
+isBarGraph = [True, False] ##これをTrueにするとすべての設定を超越して棒グラフを出力する(inputPathより要素数が少ない場合適用されない。)
+barWidths = [0.5, 0.5]
+barColors = ["red", "blue"]
+barColorAlpha = [0.5, 0.5] ##透明度[0.0, 1.0]
 #############################
 
 
@@ -97,26 +102,29 @@ for i in range(len(inputPath)):
         legend = legendLabel[i]
     else:
         legend = inputPath[i][:inputPath[i].find(".")]
-    if len(dottedLine)>=len(inputPath) and withLines:
-        if dottedLine[i]:
-            style = "--"
+    if (len(inputPath)<=len(isBarGraph) and isBarGraph[i]):
+        plt.bar(xList[i], yList[i], width=barWidths[i], color=barColors[i], alpha=barColorAlpha[i], linewidth=0)
+    else:
+        if len(dottedLine)>=len(inputPath) and withLines:
+            if dottedLine[i]:
+                style = "--"
+            else:
+                style = "-"
         else:
-            style = "-"
-    else:
-        style = ""
-    if withPoints:
-        m = "o"
-        if len(pointDescription)>0:
-            m = pointDescription[i]
-        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker=m,fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
-    else:
-        plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
-    if (len(annotateList[i])>0 and withAnnotate):
-        currentAnnotate = annotateList[i]
-        currentX = xList[i]
-        currentY = yList[i]
-        for p in range(len(currentAnnotate)):
-            plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]), color=pointColors[i])
+            style = ""
+        if withPoints:
+            m = "o"
+            if len(pointDescription)>0:
+                m = pointDescription[i]
+            plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],marker=m,fillstyle="none",markersize=pointSizes[i],markeredgecolor=pointColors[i],label=legend)
+        else:
+            plt.plot(xList[i],yList[i],linestyle=style,linewidth=width,color=lineColors[i],label=legend)
+        if (len(annotateList[i])>0 and withAnnotate):
+            currentAnnotate = annotateList[i]
+            currentX = xList[i]
+            currentY = yList[i]
+            for p in range(len(currentAnnotate)):
+                plt.annotate(currentAnnotate[p], (currentX[p], currentY[p]), color=pointColors[i])
 
 if len(function_List)>0:
     xLim = plt.xlim()
