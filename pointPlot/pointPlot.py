@@ -16,6 +16,7 @@ withAnnotate = True
 accumulationMode = 0 #0で累積なし、1で累積、2で逆累積
 logscaleX = False
 logscaleY = False
+label_fontSize = 12 #デフォルトは12
 title = r"$kk$ vs $w$"
 xLabel = r"$k_i k_j$"
 yLabel = r"$w_{ij}$"
@@ -31,7 +32,7 @@ function_LegendLabel = [r"$y=x^{1.5}/800$"]
 isBarGraph = [True, False] ##これをTrueにするとすべての設定を超越して棒グラフを出力する(inputPathより要素数が少ない場合適用されない。)
 barWidths = [0.5, 0.5]
 barColors = ["red", "blue"]
-barColorAlpha = [0.5, 0.5] ##透明度[0.0, 1.0]
+barColorAlpha = [0.5, 0.5] #不透明度[0.0, 1.0]
 #############################
 
 
@@ -82,6 +83,7 @@ if accumulationMode==2:
             yList[i][inv_j-1] += yList[i][inv_j]
 
 # プロット
+plt.rcParams["font.size"] = label_fontSize
 width = 0
 if len(plotRangeX)>0:
     plt.xlim(plotRangeX)
@@ -153,6 +155,7 @@ if withLegend:
         plt.legend()
 
 # 書き込み
+plt.tight_layout()
 if len(outputName)<=0:
     outputName = inputPath[0][:inputPath[0].find(".csv")]
 if (not os.path.exists("output")):
