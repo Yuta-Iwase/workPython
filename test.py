@@ -15,4 +15,4 @@ ax2 = fig.add_subplot(212)
 ax2.plot(x, c)
 ax2.set_ylim(-3, 3)
 
-#plt.show()
+plt.show()
