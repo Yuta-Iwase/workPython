@@ -1,5 +1,6 @@
 # 使用法紹介
 ## <a href="https://raw.githubusercontent.com/Yuta-Iwase/workPython/master/hist/HistgramPlot.py">HeatMap.py</a>
+↑の「リンクを名前をつけて保存」
 |変数名|解説|
 |:-|:-|
 |inputPath|読み込むファイル名(csvである必要がある)|
