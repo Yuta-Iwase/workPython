@@ -11,6 +11,6 @@
 |cmap|matplotlibライブラリで予め準備されているカラーマップ名([ここ](https://matplotlib.org/examples/color/colormaps_reference.html)を参照)を指定。<br>(空白でカラーマップ:hotとなる)|
 - 読み込むファイルはカンマ区切りにする必要がある(タブ区切りではダメ)
 - `inputPath` は末尾に必ず `.csv` まで書く必要がある。
-- `outputName` は空白にして省略可能。その場合、 `inputPath` と同名になる。
+- `outputName` は空文字列 `""` にして省略可能。その場合、 `inputPath` と同名になる。
 - `plotRangeX` , `plotRangeY` は2から5を指定したいなら `plotRangeX = [2,5]`などと書く。
-- `plotRangeX` , `plotRangeY` は `plotRangeX = []` などと省略することができ、その場合は値は0,1,2,...となる。
+- `plotRangeX` , `plotRangeY` は `plotRangeX = []` などと省略することができ、その場合は軸のラベルは0,1,2,...となる。
